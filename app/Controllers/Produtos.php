@@ -66,7 +66,7 @@ class Produtos extends ResourceController {
                 ]);
              }
           }catch (Exception $e) {
-             return $this->response->setStatusCode(404)->setJSON([
+             return $this->response->setStatusCode(500)->setJSON([
                 'response' => 'error',
                 'msg' => 'Erro ao salvar o produto!',
                 'errors' => [
@@ -108,7 +108,7 @@ class Produtos extends ResourceController {
           try { 
                 if($this->produtoModel->update($id, $newProduto)){
                    // deu certo
-                   return $this->response->setStatusCode(200)->setJSON([
+                   return $this->response->setStatusCode(201)->setJSON([
                       'response' => 'success',
                       'msg' => 'Produto atualizado com sucesso!'
                    ]);
@@ -143,7 +143,7 @@ class Produtos extends ResourceController {
 
        if($this->validaToken() == true){
           if(!$produto) {
-             // Sucesso ao excluir
+             // Falha ao encontrar o produto
              return $this->response->setStatusCode(404)->setJSON([
                 'response' => 'error',
                 'msg' => 'Produto não encontrado!'
@@ -156,7 +156,7 @@ class Produtos extends ResourceController {
                       'msg' => 'Produto excluido com sucesso!'
                    ]);
                 } else {
-                   // Falaha na exclusão
+                   // Falha na exclusão
                    return $this->response->setStatusCode(404)->setJSON([
                       'response' => 'error',
                       'msg' => 'Falha ao excluir produto!'
